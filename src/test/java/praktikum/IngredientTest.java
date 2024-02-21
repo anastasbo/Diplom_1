@@ -46,4 +46,22 @@ public class IngredientTest {
         burger.moveIngredient(0,1);
         assertEquals(database.availableIngredients(), burger.ingredients);
     }
+
+    @Test
+    public void getPriceIngredientTest(){
+        Ingredient ingredient = database.availableIngredients().get(0);
+        assertEquals(100, ingredient.getPrice(), 0.01f);
+    }
+
+    @Test
+    public void getNameIngredientTest(){
+        Ingredient ingredient = database.availableIngredients().get(0);
+        assertEquals("hot sauce", ingredient.getName());
+    }
+
+    @Test
+    public void getTypeIngredientTest(){
+        Ingredient ingredient = database.availableIngredients().get(0);
+        assertEquals(SAUCE, ingredient.getType());
+    }
 }

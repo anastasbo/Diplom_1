@@ -14,4 +14,9 @@ public class IngredientTypeTest {
     public void selectFillingIngredientFromEnumIsCorrect() {
         assertEquals(IngredientType.valueOf("FILLING"), IngredientType.FILLING);
     }
+
+    @Test
+    public void ingredientTypeEnumLengthTest(){
+        assertEquals(2, IngredientType.values().length);
+    }
 }
