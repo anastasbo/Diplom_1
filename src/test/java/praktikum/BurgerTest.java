@@ -7,10 +7,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static praktikum.IngredientType.FILLING;
+import static praktikum.IngredientType.SAUCE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
@@ -23,16 +26,40 @@ public class BurgerTest {
     Database database;
     private final List<Bun> buns = Arrays.asList(new Bun("grey bun",100.50F));
 
-    private final String bunName = "grey bun";
     @Before
     public void setDefaultBun() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient(SAUCE, "hot sauce", 100));
+        ingredients.add(new Ingredient(FILLING, "sausage", 300));
+        Mockito.when(database.availableIngredients()).thenReturn(ingredients);
         Mockito.when(database.availableBuns()).thenReturn(buns);
     }
 
     @Test
     public void checkSetBuns() {
         burger.setBuns(database.availableBuns().get(0));
+        String bunName = "grey bun";
         assertEquals(bunName, burger.bun.getName());
+    }
+
+    @Test
+    public void checkAddIngredients() {
+        burger.addIngredient(database.availableIngredients().get(0));
+        assertEquals(1, burger.ingredients.size());
+    }
+    @Test
+    public void checkRemoveIngredients() {
+        burger.addIngredient(database.availableIngredients().get(0));
+        burger.removeIngredient(0);
+        assertEquals(0, burger.ingredients.size());
+    }
+
+    @Test
+    public void checkMoveIngredient() {
+        burger.addIngredient(database.availableIngredients().get(1));
+        burger.addIngredient(database.availableIngredients().get(0));
+        burger.moveIngredient(0,1);
+        assertEquals(database.availableIngredients(), burger.ingredients);
     }
 
     @Test
@@ -64,5 +91,4 @@ public class BurgerTest {
                 + "Price: 601,000000" + "\n";
         assertEquals(expected, burger.getReceipt());
     }
-
 }
