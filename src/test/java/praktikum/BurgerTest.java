@@ -38,8 +38,7 @@ public class BurgerTest {
     @Test
     public void checkSetBuns() {
         burger.setBuns(database.availableBuns().get(0));
-        String bunName = "grey bun";
-        assertEquals(bunName, burger.bun.getName());
+        assertEquals("grey bun", burger.bun.getName());
     }
 
     @Test
